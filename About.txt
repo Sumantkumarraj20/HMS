@@ -1,0 +1,1 @@
+It can be used to create deck with repetation algorithim, which allow user to memorise facts effectively.
