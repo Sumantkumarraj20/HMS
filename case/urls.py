@@ -5,6 +5,6 @@ urlpatterns = [
     path('', view),
     path('generate/', generate),
     path('do_generate/', doGenerate),
-    re_path(r'^close/(?P<id>\d+)/', close),
-    re_path(r'^delete/(?P<id>\d+)/', delete),
+    re_path(r'^close/(?P<id>\d+)/$', close),
+    re_path(r'^delete/(?P<id>\d+)/$', delete),
 ]

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from sigin.views import login
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +42,14 @@ INSTALLED_APPS = [
     'profiles.apps.ProfilesConfig',
     'home.apps.HomeConfig',
     'sigin.apps.LoginmoduleConfig',
+     # Third party authentication app.
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # Providers
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.telegram',
+    'allauth.socialaccount.providers.instagram',
 
     # django default apps.
     'django.contrib.admin',
@@ -73,6 +83,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                 # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -131,8 +143,37 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# My settings
+LOGIN_URL ='account_login'
+AUTHENTICATION_BACKENDS = (
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
+ACCOUNT_EMAIL_VERIFICATION = "none"
+LOGIN_REDIRECT_URL = 'home:index'
+ACCOUNT_LOGOUT_ON_GET = True

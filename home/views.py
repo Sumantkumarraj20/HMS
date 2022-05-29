@@ -6,6 +6,6 @@ from django.contrib import messages
 
 # Create your views here.
 #@login_required()
-def home(request):
-    messages.add_message(request, messages.INFO, 'Welcome to The Hospital Portal.')
+def index(request):
+    messages.add_message(request, messages.INFO, 'Welcome to Hospital website.')
     return render(request, 'home/base.html')
